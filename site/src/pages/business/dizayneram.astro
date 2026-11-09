@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import Steps from '../../components/Steps.astro';
+import Cta from '../../components/Cta.astro';
+import WaButton from '../../components/WaButton.astro';
+import { wa, ANSWERS } from '../../data/site';
+const href = wa('Здравствуйте! Я дизайнер/архитектор, хочу обсудить проект и условия сотрудничества.');
+---
+<Base title="Дизайнерам и архитекторам" description="Солнцезащитные системы по ТЗ дизайнера в Астане и по Казахстану: ролл-шторы, римские шторы, деревянные жалюзи, электрокарнизы. Результат совпадает с концепцией." crumbs={[['Для бизнеса', '/business/'], ['Дизайнерам и архитекторам', '/business/dizayneram/']]} wa={href} waLabel="Обсудить проект в WhatsApp">
+  <section class="hero">
+    <div>
+      <div class="kicker">Для бизнеса · весь Казахстан</div>
+      <h1 class="h1">Дизайнерам и архитекторам</h1>
+      <p class="lead">Работаем по вашему ТЗ. Результат совпадает с концепцией — по цвету, текстуре, механике и размерам.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:24px"><WaButton href={href} label="Обсудить проект в WhatsApp" variant="dark" place="designers-hero" /><a class="btn btn-ghost" href="#case">Посмотреть пример</a></div>
+    </div>
+    <figure><img class="photo" src="/img/obj-ramada-1.webp" alt="Ресторан отеля Ramada by Wyndham: римские шторы" width="800" height="420" fetchpriority="high" /><figcaption>Ramada by Wyndham, Астана — римские шторы под интерьерную концепцию. Фото объекта.</figcaption></figure>
+  </section>
+  <section class="sec"><h2 class="h2">Что вы получаете</h2><div class="grid">
+    {[['Один подрядчик на весь объект', 'От замера до сдачи с актами, паспортами и гарантийными листами'], ['Монтаж в нерабочее время', 'Объект и график отделки не останавливаются'], ['Коммерческое предложение', 'Спецификация и согласование каждой позиции до производства'], ['Поможем с ТЗ', 'Подскажем по тканям, механике и управлению для вашей спецификации']].map(([t, d]) => <div class="card" style="padding:22px"><h3 style="font-size:19px;letter-spacing:0">{t}</h3><p style="font-size:15px;line-height:1.5;color:var(--ink-3);margin:6px 0 0">{d}</p></div>)}
+  </div></section>
+  <section class="sec"><h2 class="h2">Решения для ваших проектов</h2><p class="sub">Собственное производство, изделия по индивидуальным размерам. Ткани подбираем вживую по образцам.</p><div class="grid">
+    {[['Ролл-шторы', 'Screen — свет без потери вида. Blackout — полное затемнение. День-Ночь — свет по настроению.'], ['Римские шторы', 'Мягкая ткань под дизайн-проект. Цепочка или электропривод.'], ['Деревянные жалюзи', 'Акация, бамбук, сосна. Тёплый материал под любой интерьер.'], ['Электрокарнизы и моторизация', 'Яндекс Алиса, Google Home, Apple HomeKit, пульт. Сценарии «Кино», «Доброе утро», «Я ушёл».']].map(([t, d]) => <div class="card" style="padding:22px"><h3 style="font-size:18px;letter-spacing:0">{t}</h3><p style="font-size:14px;line-height:1.5;color:var(--ink-3);margin:6px 0 0">{d}</p></div>)}
+  </div></section>
+  <section class="sec"><h2 class="h2">Как работаем с дизайнером</h2><Steps items={[['Пишете в WhatsApp', 'Присылаете концепцию, планировку или ТЗ прямо в переписке'], ['Спецификация', 'Подбираем ткани и механизмы, согласуем каждую позицию'], ['Производство', 'Собственный цех, контроль качества на каждом этапе'], ['Монтаж и сдача', 'Акты, паспорта изделий, гарантия 12 месяцев']]} /></section>
+  <section class="sec" id="case"><h2 class="h2">Пример: интерьерная концепция отеля</h2>
+    <div class="card" style="overflow:hidden;display:flex;flex-wrap:wrap">
+      <div style="flex:1 1 420px;display:flex;gap:4px;min-width:0"><img src="/img/obj-ramada-1.webp" alt="Римские шторы в ресторане Ramada" style="flex:1;min-width:0;height:320px;object-fit:cover" loading="lazy" /><img src="/img/obj-ramada-2.webp" alt="Римская штора крупным планом" style="flex:1;min-width:0;height:320px;object-fit:cover" loading="lazy" /></div>
+      <div style="flex:1 1 360px;padding:28px"><div class="kicker">Астана, ул. Бейбитшилик, 8</div><h3 style="font-size:26px;margin-top:6px">Ramada by Wyndham</h3><p style="font-size:16px;line-height:1.6;color:var(--ink-2);margin:12px 0 0">Пошив и монтаж римских штор на подъёмном механизме и классических штор с тюлем для номерного фонда и общих зон. Ткани и посадку подбирали под интерьерную концепцию каждого помещения.</p><a href="/projects/ramada/" style="display:inline-block;margin-top:16px;font-weight:600;color:var(--accent)">Подробнее об объекте →</a></div>
+    </div>
+    <blockquote class="card" style="margin:16px 0 0;padding:22px 26px"><div style="font-size:18px;line-height:1.55">«Решения органично вписались в концепцию каждой точки сети: аккуратный монтаж без следов на отделке.»</div><div class="muted" style="font-size:14px;margin-top:8px">Espresso Day, сеть кофеен — из благодарственного письма</div></blockquote>
+  </section>
+  <section class="sec" style="max-width:960px;margin-left:0"><h2 class="h2">Вопросы дизайнеров</h2>
+    <Faq items={[['Вы работаете по ТЗ дизайнера?', 'Да. Результат совпадает с концепцией по цвету, текстуре, механике и размерам. Если ТЗ ещё нет, поможем его составить.'], ['Можно ли встроить шторы в умный дом?', 'Да: электрокарнизы и моторизованные шторы работают с Яндекс Алисой, Google Home, Apple HomeKit и пультом, есть сценарии.'], ['Работаете ли вы за пределами Астаны?', 'Для бизнес-проектов — по всему Казахстану, замер и монтаж с выездом.'], ['Как запросить коммерческое предложение?', 'Напишите нам в WhatsApp: ответим в течение 2 минут в рабочее время, уточним детали и подготовим КП.'], ['Какая гарантия?', ANSWERS.warranty]]} />
+  </section>
+  <Cta title="Обсудим ваш проект?" text="Условия сотрудничества для дизайнеров и архитекторов расскажем подробно в WhatsApp." href={href} label="Обсудить проект в WhatsApp" place="designers-cta" />
+</Base>

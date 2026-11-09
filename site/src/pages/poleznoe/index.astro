@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import { GUIDES } from '../../data/guides';
+---
+<Base title="Полезное: гиды по выбору штор" description="Простые гиды ZEBRA QAZAQSTAN: как выбрать ролл-шторы, чем отличаются Blackout, Screen и День-Ночь, умные шторы для дома, чек-лист закупщика для офиса." crumbs={[['Полезное', '/poleznoe/']]}>
+  <section class="sec" style="padding-top:16px">
+    <h1 class="h1">Полезное</h1>
+    <p class="lead" style="max-width:760px">Простые гиды о солнцезащите: как выбрать ролл-шторы, чем отличаются ткани, как устроены умные шторы и что важно закупщику.</p>
+    <div class="grid-3" style="margin-top:24px">{GUIDES.map((g) => (
+      <a class="card lcard" href={`/poleznoe/${g.slug}/`}><img src={g.img} alt={g.alt} loading="lazy" width="600" height="200" style="height:200px" /><div class="body"><div class="kicker">{g.read} чтения</div><h3>{g.title}</h3><p>{g.short[0]}</p><div class="more">Читать →</div></div></a>
+    ))}</div>
+  </section>
+</Base>

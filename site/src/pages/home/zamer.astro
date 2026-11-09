@@ -1,0 +1,68 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import WaIcon from '../../components/WaIcon.astro';
+import { WA, ANSWERS, SITE } from '../../data/site';
+const products = ['Ролл-шторы', 'Жалюзи', 'Римские шторы', 'Электрокарниз', 'Не знаю, подскажите'];
+const districts = ['Алматы', 'Байконур', 'Есиль', 'Нура', 'Сарыарка'];
+---
+<Base title="Бесплатный замер в Астане" description="Запишитесь на бесплатный замер штор и жалюзи в Астане через WhatsApp: ответим за 2 минуты в рабочее время, приедем с образцами тканей, возможен монтаж в один день." crumbs={[['Для дома', '/home/'], ['Бесплатный замер', '/home/zamer/']]}>
+  <section class="hero" style="align-items:flex-start">
+    <div>
+      <h1 class="h1">Бесплатный замер в Астане</h1>
+      <p class="lead">Напишите нам в WhatsApp: ответим за 2 минуты в рабочее время. Замерщик приедет с образцами тканей и рассчитает стоимость. Без обязательств.</p>
+      <div class="badge" style="margin-top:12px">{ANSWERS.sameDay}</div>
+      <img class="photo" src="/img/home-alu-bronze.webp" alt="Алюминиевые жалюзи в гостиной — наша работа" width="800" height="300" style="height:clamp(200px,24vw,300px);margin-top:22px" />
+      <ol style="list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:12px">
+        {[['Пишете нам в WhatsApp', 'Сообщение собирается само, достаточно нажать «Отправить»'], ['Отвечаем за 2 минуты', 'В рабочее время, пн–пт 09:00–18:00. Согласуем удобное время замера'], ['Замер с образцами', 'Измеряем окна, показываем ткани, подбираем решение'], ['Расчёт стоимости', 'Цена по вашим размерам. Гарантия 12 месяцев на всё']].map(([t, d], i) => (
+          <li style="display:flex;gap:14px"><span style="flex:0 0 32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700">{i + 1}</span><div><b style="font-size:17px">{t}</b><div class="muted" style="font-size:15px;margin-top:2px">{d}</div></div></li>
+        ))}
+      </ol>
+    </div>
+    <div class="card" id="form" style="max-width:560px;padding:clamp(20px,2.4vw,32px)">
+      <h2 style="font-size:26px">Записаться на замер в WhatsApp</h2>
+      <p class="muted" style="margin:6px 0 18px;font-size:14px">Выберите, что нужно, и мы получим готовое сообщение. Все поля необязательны.</p>
+      <fieldset style="border:0;padding:0;margin:0"><legend style="font-size:13px;font-weight:600;margin-bottom:8px">Что вас интересует</legend>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">{products.map((p) => <label class="pick"><input type="checkbox" name="p" value={p} /><span>{p}</span></label>)}</div>
+      </fieldset>
+      <label for="rayon" style="display:block;font-size:13px;font-weight:600;margin:16px 0 6px">Район</label>
+      <select id="rayon" class="inp"><option value="">Не важно / выберу позже</option>{districts.map((d) => <option>{d}</option>)}</select>
+      <label for="name" style="display:block;font-size:13px;font-weight:600;margin:16px 0 6px">Как к вам обращаться</label>
+      <input id="name" class="inp" type="text" autocomplete="given-name" placeholder="Имя" />
+      <div style="font-size:13px;font-weight:600;margin:18px 0 8px">Ваше сообщение</div>
+      <div style="background:#efe7dc;border-radius:12px;padding:14px"><div id="msg" style="background:#fff;border-radius:12px 12px 4px 12px;padding:12px 14px;font-size:15px;line-height:1.5;margin-left:24px;white-space:pre-line;box-shadow:0 1px 2px rgba(0,0,0,.08)">Здравствуйте! Хочу записаться на бесплатный замер.</div></div>
+      <a id="send" class="btn btn-accent" style="width:100%;margin-top:18px;min-height:52px;font-size:17px" href={WA.zamer} target="_blank" rel="noopener" data-event="whatsapp_click" data-place="zamer-builder"><WaIcon />Отправить в WhatsApp</a>
+      <p id="sent" role="status" hidden style="margin:14px 0 0;background:#f4ede6;border:1px solid #e3d3c4;border-radius:10px;padding:12px 14px;font-size:14px;line-height:1.5">WhatsApp открывается в новой вкладке. Если не открылся, напишите нам на номер <b>{SITE.phone}</b>.</p>
+      <p class="muted" style="margin:12px 0 0;font-size:12px;text-align:center">Нажимая кнопку, вы переходите в WhatsApp. <a href="/privacy/" style="text-decoration:underline">Политика конфиденциальности</a></p>
+    </div>
+  </section>
+  <section class="sec" style="max-width:960px;margin-left:0"><h2 class="h2">Вопросы о замере</h2>
+    <Faq items={[['Сколько стоит замер?', 'Замер бесплатный и ни к чему не обязывает.'], ['Можно ли заказать шторы только на одно окно?', ANSWERS.oneWindow], ['Какие сроки изготовления и монтажа?', ANSWERS.terms], ['Как быстро вы ответите?', ANSWERS.response], ['Нужно ли готовиться к приезду замерщика?', 'Достаточно обеспечить доступ к окнам. Образцы тканей замерщик привезёт с собой.'], ['Работаете ли вы за пределами Астаны?', ANSWERS.geo], ['Какая гарантия?', ANSWERS.warranty]]} />
+  </section>
+</Base>
+<style>
+  .inp { width: 100%; padding: 14px; border: 1.5px solid var(--line-2); border-radius: 10px; font: 16px 'Onest', sans-serif; background: #fff; }
+  .pick { position: relative; }
+  .pick input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .pick span { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 14px; border: 1.5px solid var(--line-2); border-radius: 999px; font-size: 14px; background: #fff; }
+  .pick input:checked + span { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .pick input:focus-visible + span { outline: 3px solid #00a3c4; outline-offset: 2px; }
+</style>
+<script>
+  const num = '77789767749';
+  const msg = document.getElementById('msg')!;
+  const send = document.getElementById('send') as HTMLAnchorElement;
+  const update = () => {
+    const picked = [...document.querySelectorAll<HTMLInputElement>('input[name="p"]:checked')].map((i) => i.value.toLowerCase());
+    const name = (document.getElementById('name') as HTMLInputElement).value.trim();
+    const rayon = (document.getElementById('rayon') as HTMLSelectElement).value;
+    const lines = ['Здравствуйте' + (name ? `, меня зовут ${name}` : '') + '! Хочу записаться на бесплатный замер.'];
+    if (picked.length) lines.push('Интересует: ' + picked.join(', ') + '.');
+    if (rayon) lines.push('Район: ' + rayon + '.');
+    const text = lines.join('\n');
+    msg.textContent = text;
+    send.href = `https://wa.me/${num}?text=${encodeURIComponent(text)}`;
+  };
+  document.querySelectorAll('#form input, #form select').forEach((el) => { el.addEventListener('input', update); el.addEventListener('change', update); });
+  send.addEventListener('click', () => { document.getElementById('sent')!.hidden = false; });
+</script>

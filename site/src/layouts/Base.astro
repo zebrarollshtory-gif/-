@@ -1,0 +1,119 @@
+---
+import '../styles/global.css';
+import WaButton from '../components/WaButton.astro';
+import { SITE, NAV, FOOTER_NAV, WA } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  crumbs?: [string, string][]; // [label, href]; последний — текущая страница
+  wa?: string;
+  waLabel?: string;
+  ogImage?: string;
+  noHeaderWa?: boolean;
+}
+const { title, description, crumbs = [], wa = WA.zamer, waLabel = 'Написать в WhatsApp', ogImage = '/img/work-office-sunset.webp' } = Astro.props;
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site).toString();
+const fullTitle = path === '/' ? `${SITE.brand} — ролл-шторы, жалюзи и электрокарнизы в Астане` : `${title} — ${SITE.brand}`;
+
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  name: SITE.brand,
+  legalName: SITE.legal,
+  slogan: SITE.slogan,
+  url: new URL('/', Astro.site).toString(),
+  logo: new URL('/img/logo.png', Astro.site).toString(),
+  image: new URL(ogImage, Astro.site).toString(),
+  telephone: SITE.phoneE164,
+  foundingDate: SITE.founded,
+  address: { '@type': 'PostalAddress', streetAddress: SITE.streetAddress, addressLocality: SITE.city, addressCountry: 'KZ' },
+  openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' }],
+  areaServed: [{ '@type': 'City', name: 'Астана' }, { '@type': 'Country', name: 'Казахстан' }],
+  sameAs: [SITE.instagram, SITE.gis],
+  description: 'Собственное производство и монтаж солнцезащитных систем в Астане: ролл-шторы, жалюзи, римские шторы, электрокарнизы и автоматизация. С 2019 года, более 50 объектов, гарантия 12 месяцев.',
+};
+const crumbLd = crumbs.length ? {
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [['Главная', '/'], ...crumbs].map(([name, href], i) => ({ '@type': 'ListItem', position: i + 1, name, item: new URL(href, Astro.site).toString() })),
+} : null;
+const isActive = (href: string) => path.startsWith(href);
+---
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" href="/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_KZ" />
+  <meta property="og:site_name" content={SITE.brand} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+  <meta name="theme-color" content="#1f2d3d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script type="application/ld+json" set:html={JSON.stringify(business)} />
+  {crumbLd && <script type="application/ld+json" set:html={JSON.stringify(crumbLd)} />}
+  <slot name="head" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="bar">
+      <a class="logo" href="/" aria-label={`${SITE.brand} — на главную`}><img src="/img/logo.png" alt={SITE.brand} width="133" height="40" /></a>
+      <nav class="site-nav" id="site-nav" aria-label="Основное меню">
+        {NAV.map((n) => <a href={n.href} aria-current={isActive(n.href) ? 'page' : undefined}>{n.label}</a>)}
+      </nav>
+      <div class="header-wa"><WaButton href={wa} label={waLabel} variant="accent" place="header" /></div>
+      <button class="menu-btn" type="button" aria-label="Меню" aria-expanded="false" aria-controls="site-nav">☰</button>
+    </div>
+  </header>
+
+  {crumbs.length > 0 && (
+    <nav class="crumbs" aria-label="Хлебные крошки"><ol><li><a href="/">Главная</a></li>{crumbs.map(([l, h], i) => i === crumbs.length - 1 ? <li aria-current="page">{l}</li> : <li><a href={h}>{l}</a></li>)}</ol></nav>
+  )}
+
+  <main><slot /></main>
+
+  <footer class="site-footer">
+    <div class="in">
+      <div style="flex:1 1 260px"><div style="font-size:17px;font-weight:800;color:var(--ink)">{SITE.brand}</div>{SITE.legal}<br />{SITE.address}<br />{SITE.hours}</div>
+      <div style="flex:1 1 220px">WhatsApp: <a href={WA.question} target="_blank" rel="noopener" data-event="whatsapp_click" data-place="footer">{SITE.phone}</a><br />Instagram <a href={SITE.instagram} target="_blank" rel="noopener">{SITE.instagramHandle}</a><br /><a href={SITE.gis} target="_blank" rel="noopener" style="text-decoration:underline">2GIS: Zebra Qazaqstan</a></div>
+      <div style="flex:1 1 260px">{SITE.slogan}.</div>
+      <nav class="map" aria-label="Карта сайта">{FOOTER_NAV.map((n) => <a href={n.href}>{n.label}</a>)}</nav>
+    </div>
+  </footer>
+
+  <div class="wa-bar"><WaButton href={wa} label={waLabel} variant="accent" place="mobile-bar" /></div>
+
+  <script>
+    const btn = document.querySelector('.menu-btn');
+    const nav = document.getElementById('site-nav');
+    btn?.addEventListener('click', () => {
+      const open = nav?.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(!!open));
+      btn.textContent = open ? '×' : '☰';
+    });
+    // События для аналитики: подключатся к GA4 и Яндекс Метрике при запуске.
+    // Нажатие на WhatsApp — это «обращение», а не заявка.
+    document.addEventListener('click', (e) => {
+      const el = (e.target as HTMLElement).closest('[data-event]') as HTMLElement | null;
+      if (!el || el.tagName === 'DETAILS') return;
+      const w = window as any;
+      (w.dataLayer = w.dataLayer || []).push({ event: el.dataset.event, place: el.dataset.place || '', page: location.pathname });
+    });
+    document.querySelectorAll('details[data-event]').forEach((d) => d.addEventListener('toggle', () => {
+      if (!(d as HTMLDetailsElement).open) return;
+      const w = window as any;
+      (w.dataLayer = w.dataLayer || []).push({ event: 'faq_open', question: d.querySelector('summary')?.textContent || '', page: location.pathname });
+    }));
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import Facts from '../../components/Facts.astro';
+import Gallery from '../../components/Gallery.astro';
+import Cta from '../../components/Cta.astro';
+import WaButton from '../../components/WaButton.astro';
+import { BIZ, bizWa, type BizPage } from '../../data/content';
+export function getStaticPaths() { return BIZ.map((b) => ({ params: { slug: b.slug }, props: { b } })); }
+const { b } = Astro.props as { b: BizPage };
+const href = bizWa(b);
+const docs = [['01 · Договорные', 'Договор подряда, ТЗ, спецификация'], ['02 · Финансовые', 'Счёт, акт выполненных работ, гарантийный лист'], ['03 · Исполнительные', 'Реестр изделий, акты приёмки, фотофиксация'], ['04 · Гарантийные', 'Сертификаты на ткани и механизмы, паспорта изделий']];
+---
+<Base title={b.h1} description={b.description} crumbs={[['Для бизнеса', '/business/'], [b.crumb, `/business/${b.slug}/`]]} wa={href} waLabel={b.cta}>
+  <section class="hero">
+    <div>
+      <div class="kicker">{b.kicker}</div>
+      <h1 class="h1">{b.h1}</h1>
+      <p class="lead">{b.lead}</p>
+      <div style="margin-top:24px"><WaButton href={href} label={b.cta} variant="dark" place="biz-hero" /></div>
+      <div class="muted" style="font-size:13px;margin-top:8px">Ответим за 2 минуты в рабочее время. Документы и ТЗ — в переписке.</div>
+    </div>
+    <figure><img class="photo" src={b.img} alt={b.imgAlt} width="800" height="420" fetchpriority="high" /><figcaption>Наша работа.</figcaption></figure>
+  </section>
+  <section class="sec"><Facts items={[['с 2019', 'года на рынке'], ['50+', 'объектов сдано'], ['10 000+', 'м² в год'], ['весь РК', 'замер и монтаж с выездом']]} /></section>
+  <section class="sec"><h2 class="h2">{b.pointsTitle}</h2><div class="grid">{b.points.map(([t, d]) => (<div class="card" style="padding:22px"><h3 style="font-size:19px;letter-spacing:0">{t}</h3><p style="font-size:15px;line-height:1.55;color:var(--ink-2);margin:8px 0 0">{d}</p></div>))}</div></section>
+  {b.docs && <section class="sec"><h2 class="h2">Документы, которые вы получите</h2><div class="grid">{docs.map(([t, d]) => (<div class="card" style="padding:20px"><div style="font-size:13px;font-weight:700;color:var(--accent)">{t}</div><div style="font-size:15px;line-height:1.6;margin-top:8px">{d}</div></div>))}</div><p class="muted" style="margin:12px 0 0;font-size:14px">Документы предоставляем лично — напишите в WhatsApp. Реквизиты — при заключении договора.</p></section>}
+  <section class="sec"><h2 class="h2">Наши работы</h2><Gallery items={b.gallery} /><a href="/projects/" style="display:inline-block;margin-top:16px;font-weight:600;color:var(--accent)">Все объекты →</a></section>
+  {b.quote && <section class="sec"><blockquote class="card" style="margin:0;padding:24px 28px"><div style="font-size:19px;line-height:1.55">{b.quote[0]}</div><div class="muted" style="font-size:14px;margin-top:10px">{b.quote[1]} — из благодарственного письма</div></blockquote></section>}
+  <section class="sec" style="max-width:960px;margin-left:0"><h2 class="h2">Вопросы и ответы</h2><Faq items={b.faq} /></section>
+  <Cta title={b.ctaTitle} text="Напишите в WhatsApp: подскажем, куда отправить планировку и ТЗ, поможем составить техническое задание и подготовим КП." href={href} label={b.cta} place="biz-cta" />
+</Base>

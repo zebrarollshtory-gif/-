@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import WaButton from '../../components/WaButton.astro';
+import { WA, SITE } from '../../data/site';
+const letters = [['BI Group', 'Девелопер', 'letter-bi-group'], ['ТОО «Курылыс»', 'Строительная компания', 'letter-kurylys'], ['Espresso Day', 'Сеть кофеен', 'letter-espresso-day'], ['BI Finance', 'ТОО «МФО «BI Finance»', 'letter-bi-finance'], ['Bereke Astana', 'Детский центр — благотворительная помощь', 'letter-bereke'], ['Нур Бала', 'Детский центр — благотворительная помощь', 'letter-nur-bala']];
+const quotes = [['«Работы выполнены в согласованные сроки, без нарушения режима работы объекта. Рекомендуем как надёжного подрядчика.»', 'BI Group, девелопер'], ['«Оптимальные решения для нестандартных проёмов, монтаж в нерабочее время без срывов графика.»', 'ТОО «Курылыс», строительная компания'], ['«Решения органично вписались в концепцию каждой точки сети: аккуратный монтаж без следов на отделке.»', 'Espresso Day, сеть кофеен']];
+const certs = ['Сертификаты на ткани', 'Сертификаты на механизмы', 'Санитарно-эпидемиологические заключения', 'Пожарные заключения'];
+---
+<Base title="Документы и письма заказчиков" description="Благодарственные письма BI Group, ТОО «Курылыс», Espresso Day и других заказчиков. Сертификаты и пакет документов для закупки предоставляем лично по запросу в WhatsApp." crumbs={[['Документы и письма', '/documents/']]} wa={WA.docs} waLabel="Запросить документы в WhatsApp">
+  <section class="sec" style="padding-top:16px">
+    <h1 class="h1">Документы и письма заказчиков</h1>
+    <p class="lead" style="max-width:760px">Для закупщиков, АХО и тендерных специалистов: благодарственные письма и сертификаты на изделия. Полный пакет документов предоставляем лично — напишите нам в WhatsApp.</p>
+  </section>
+  <section class="sec"><h2 class="h2">Благодарственные письма</h2><p class="sub">Нажмите на письмо, чтобы открыть крупно</p>
+    <div class="grid">{letters.map(([n, k, img]) => (
+      <button type="button" class="card letter" data-src={`/img/${img}.webp`} data-name={n}>
+        <span class="thumb"><img src={`/img/${img}.webp`} alt={`Благодарственное письмо: ${n}`} loading="lazy" width="300" height="200" /></span>
+        <b>{n}</b><span class="muted" style="font-size:13px">{k}</span>
+      </button>))}</div>
+    <h3 style="font-size:22px;margin:32px 0 14px">Что пишут заказчики</h3>
+    <div class="grid-3">{quotes.map(([q, a]) => <blockquote class="card" style="margin:0;padding:20px"><div style="font-size:16px;line-height:1.55">{q}</div><div class="muted" style="font-size:13px;margin-top:10px">{a}</div></blockquote>)}</div>
+  </section>
+  <section class="sec"><h2 class="h2">Сертификаты и заключения</h2><p class="sub">Сканы предоставляем по запросу вместе с пакетом документов.</p>
+    <div class="grid">{certs.map((c) => <div class="card" style="padding:20px"><b style="font-size:17px">{c}</b><div class="muted" style="font-size:14px;margin-top:6px">По запросу в WhatsApp</div></div>)}</div>
+  </section>
+  <section class="sec"><div class="row">
+    <div class="card" style="flex:1 1 380px;padding:24px"><h2 style="font-size:22px;margin-bottom:12px">О компании</h2><div class="muted" style="font-size:15px;line-height:1.8">{SITE.legal}, бренд {SITE.brand}<br />{SITE.address}<br />Реквизиты предоставляем заказчикам при заключении договора или после согласования условий.</div></div>
+    <div style="flex:1 1 380px;background:var(--ink);color:#fff;border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:16px"><div><h2 style="font-size:22px">Пакет документов для закупки</h2><p style="color:#d9d3c7;margin:10px 0 0;line-height:1.6">Договор, спецификация, счёт, акты, паспорта изделий, гарантийные листы, сертификаты. Поможем составить техническое задание.</p></div><div><WaButton href={WA.docs} label="Запросить документы в WhatsApp" variant="light" place="docs-package" /></div></div>
+  </div></section>
+  <dialog id="lb" aria-label="Благодарственное письмо"><div class="lb-head"><b id="lb-t"></b><button type="button" id="lb-x" aria-label="Закрыть">×</button></div><img id="lb-i" alt="" src="/img/letter-bi-group.webp" /></dialog>
+</Base>
+<style>
+  .letter { text-align: left; padding: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; font: inherit; color: inherit; }
+  .letter .thumb { height: 200px; background: #f7f4ee; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 4px; }
+  .letter .thumb img { max-height: 100%; width: auto; }
+  .letter b { font-size: 16px; }
+  dialog { border: 0; border-radius: 14px; padding: 14px; max-width: min(900px, 94vw); }
+  dialog::backdrop { background: rgba(20,17,15,.82); }
+  dialog img { max-height: 78vh; width: auto; margin: 10px auto 0; }
+  .lb-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .lb-head button { width: 44px; height: 44px; border: 1px solid var(--line); background: #fff; border-radius: 8px; font-size: 22px; cursor: pointer; }
+</style>
+<script>
+  const d = document.getElementById('lb') as HTMLDialogElement;
+  document.querySelectorAll<HTMLElement>('.letter').forEach((b) => b.addEventListener('click', () => {
+    (document.getElementById('lb-i') as HTMLImageElement).src = b.dataset.src!;
+    (document.getElementById('lb-i') as HTMLImageElement).alt = 'Благодарственное письмо: ' + b.dataset.name;
+    document.getElementById('lb-t')!.textContent = b.dataset.name!;
+    d.showModal();
+  }));
+  document.getElementById('lb-x')!.addEventListener('click', () => d.close());
+  d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+</script>

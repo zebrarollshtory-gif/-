@@ -1,0 +1,4 @@
+---
+const { items } = Astro.props; // [src, caption][]
+---
+<div class="gallery">{items.map(([src, cap]) => (<figure><img src={src} alt={cap} loading="lazy" width="600" height="300" /><figcaption>{cap}</figcaption></figure>))}</div>

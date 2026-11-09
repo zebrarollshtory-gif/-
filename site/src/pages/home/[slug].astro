@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import Gallery from '../../components/Gallery.astro';
+import Steps from '../../components/Steps.astro';
+import WaButton from '../../components/WaButton.astro';
+import { wa, ANSWERS } from '../../data/site';
+import { PRODUCTS, productFaq, type Product } from '../../data/content';
+export function getStaticPaths() { return PRODUCTS.map((p) => ({ params: { slug: p.slug }, props: { p } })); }
+const { p } = Astro.props as { p: Product };
+const waHref = wa(`Здравствуйте! Хочу записаться на бесплатный замер. Интересует: ${p.key}.`);
+const ld = { '@context': 'https://schema.org', '@type': 'Product', name: p.title, description: p.description, image: new URL(p.img, Astro.site).toString(), brand: { '@type': 'Brand', name: 'ZEBRA QAZAQSTAN' } };
+---
+<Base title={p.title} description={p.description} crumbs={[['Для дома', '/home/'], [p.crumb, `/home/${p.slug}/`]]} wa={waHref} waLabel="Заказать замер в WhatsApp">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <section class="hero">
+    <div>
+      <div class="kicker">Астана · собственное производство</div>
+      <h1 class="h1">{p.h1}</h1>
+      <p class="lead">{p.lead}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px"><span class="chip">Бесплатный замер с образцами</span><span class="chip">По вашим размерам</span><span class="chip">Гарантия 12 месяцев</span><span class="badge">{ANSWERS.sameDay}</span></div>
+      <div style="margin-top:24px"><WaButton href={waHref} label="Заказать замер в WhatsApp" place="product-hero" /></div>
+      <div class="muted" style="font-size:13px;margin-top:8px">Ответим за 2 минуты в рабочее время. Цена — после замера, по вашим размерам.</div>
+    </div>
+    <figure><img class="photo" src={p.img} alt={p.imgAlt} width="800" height="420" fetchpriority="high" /><figcaption>{p.imgCaption}</figcaption></figure>
+  </section>
+  {p.gallery && <section class="sec"><h2 class="h2">Наши работы</h2><p class="sub">Реальные фото наших установок в квартирах Астаны</p><Gallery items={p.gallery} /></section>}
+  <section class="sec"><h2 class="h2">{p.typesTitle}</h2>
+    <div class="grid">{p.types.map(([n, t, d]) => (<div class="card" style="padding:22px"><h3 style="font-size:20px">{n}</h3><div style="font-size:14px;font-weight:600;color:var(--accent);margin-top:4px">{t}</div><p style="font-size:15px;line-height:1.55;color:var(--ink-2);margin:10px 0 0">{d}</p></div>))}</div>
+  </section>
+  <section class="sec"><h2 class="h2">Куда подходят</h2><div style="display:flex;flex-wrap:wrap;gap:10px">{p.rooms.map((r) => <span class="chip" style="font-size:15px;padding:10px 16px">{r}</span>)}</div></section>
+  <section class="sec"><h2 class="h2">Как заказать</h2><Steps items={[['Пишете в WhatsApp', 'Отвечаем за 2 минуты в рабочее время'], ['Бесплатный замер', 'С образцами тканей, без обязательств'], ['Изготовление', 'Собственный цех, ваши размеры'], ['Монтаж', 'Аккуратно, гарантия 12 месяцев']]} /></section>
+  <section class="sec" style="max-width:960px;margin-left:0"><h2 class="h2">Вопросы и ответы</h2><Faq items={productFaq(p)} /></section>
+  <section class="sec"><h2 class="h2">Другие изделия для дома</h2><div style="display:flex;flex-wrap:wrap;gap:10px">{PRODUCTS.filter((x) => x.slug !== p.slug).map((x) => <a class="card" style="padding:14px 18px;font-weight:600" href={`/home/${x.slug}/`}>{x.crumb} →</a>)}</div></section>
+</Base>

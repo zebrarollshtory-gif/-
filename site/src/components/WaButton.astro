@@ -1,0 +1,5 @@
+---
+import WaIcon from './WaIcon.astro';
+const { href, label = 'Написать в WhatsApp', variant = 'accent', event = 'whatsapp_click', place = '' } = Astro.props;
+---
+<a class={`btn btn-${variant}`} href={href} target="_blank" rel="noopener" data-event={event} data-place={place}><WaIcon />{label}</a>

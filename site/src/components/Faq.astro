@@ -1,0 +1,14 @@
+---
+// items: [question, answer][]; schema=true добавляет разметку FAQPage
+const { items, schema = true, open = 0 } = Astro.props;
+const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: items.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) };
+---
+<div class="card faq">
+  {items.map(([q, a], i) => (
+    <details open={i === open} data-event="faq_open">
+      <summary>{q}</summary>
+      <div class="answer">{a}</div>
+    </details>
+  ))}
+</div>
+{schema && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}

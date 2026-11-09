@@ -1,0 +1,4 @@
+---
+const { items } = Astro.props; // [title, text][]
+---
+<div class="row">{items.map(([t, d], i) => (<div class="card step"><div class="num">{i + 1}</div><h3>{t}</h3><p>{d}</p></div>))}</div>

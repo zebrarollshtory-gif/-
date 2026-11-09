@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import Gallery from '../../components/Gallery.astro';
+import Cta from '../../components/Cta.astro';
+import { WA } from '../../data/site';
+import { OBJECTS, OBJECT_GROUPS, WORKS } from '../../data/content';
+---
+<Base title="Наши объекты" description="Объекты ZEBRA QAZAQSTAN в Астане: БЦ «Агар», БЦ «Сигма», Cardiff University, отели Radisson и Ramada, ГП №10, телеканал «Хабар», Astana EXPO. Более 50 объектов с 2019 года." crumbs={[['Наши объекты', '/projects/']]} wa={WA.kp} waLabel="Обсудить объект в WhatsApp">
+  <section class="sec" style="padding-top:16px">
+    <h1 class="h1">Наши объекты</h1>
+    <p class="lead" style="max-width:760px">Бизнес-центры, гостиницы, клиники, учебные заведения, кафе и выставочные павильоны Астаны. Многие здания мы оснастили целиком — от первого до последнего этажа.</p>
+    <div class="card" style="margin-top:22px;display:flex;flex-wrap:wrap;overflow:hidden;border-left:6px solid var(--accent)">
+      <div style="flex:1 1 360px;padding:20px 24px"><b style="font-size:18px">Здесь — лишь небольшая часть наших работ</b><p class="muted" style="margin:6px 0 0;line-height:1.55">С 2019 года мы сдали более 50 объектов: организации, учреждения, заведения и квартиры. Ниже — те, о которых можем рассказать публично. Список постоянно пополняется.</p></div>
+      <div style="display:flex"><div style="padding:20px 24px;border-left:1px solid var(--line)"><b style="font-size:28px">50+</b><div class="muted" style="font-size:13px">объектов сдано</div></div><div style="padding:20px 24px;border-left:1px solid var(--line)"><b style="font-size:28px">10 000+</b><div class="muted" style="font-size:13px">м² в год</div></div></div>
+    </div>
+    <div class="filters" role="group" aria-label="Фильтр по типу объекта" hidden>
+      {OBJECT_GROUPS.map(([k, l]) => <button type="button" data-g={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l} <span>{k === 'all' ? OBJECTS.length : OBJECTS.filter((o) => o.group === k).length}</span></button>)}
+    </div>
+    <div class="grid" style="margin-top:20px">
+      {OBJECTS.map((o) => (
+        <a class="card lcard obj" data-g={o.group} href={`/projects/${o.slug}/`}>
+          <img src={o.img} alt={o.name} loading="lazy" width="600" height="210" style="height:210px" />
+          <div class="body"><div class="kicker">{o.cat}</div><h3>{o.name}</h3><div class="muted" style="font-size:13px;margin-top:2px">{o.addr}</div><p>{o.done}</p><div class="more">Подробнее →</div></div>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="sec"><h2 class="h2">Ещё наши работы в офисах и заведениях</h2><p class="sub">Реальные фото с объектов: ролл-шторы, портьеры, моторизованные системы и монтаж.</p><Gallery items={WORKS} /></section>
+  <Cta title="Ваш объект может быть следующим" text="Напишите, что за объект и какие задачи. Ответим в течение 2 минут в рабочее время." href={WA.kp} label="Обсудить объект в WhatsApp" place="projects-cta" />
+</Base>
+<style>
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .filters button { border: 1.5px solid var(--line-2); background: #fff; color: var(--ink); border-radius: 999px; padding: 10px 16px; font: 600 14px 'Onest', sans-serif; cursor: pointer; min-height: 44px; }
+  .filters button span { opacity: .6; font-weight: 500; }
+  .filters button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+</style>
+<script>
+  const f = document.querySelector('.filters') as HTMLElement;
+  f.hidden = false;
+  f.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest('button'); if (!b) return;
+    const g = b.dataset.g;
+    f.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    document.querySelectorAll<HTMLElement>('.obj').forEach((o) => { o.hidden = g !== 'all' && o.dataset.g !== g; });
+  });
+</script>

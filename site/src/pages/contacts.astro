@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import WaIcon from '../components/WaIcon.astro';
+import { SITE, WA } from '../data/site';
+---
+<Base title="Контакты" description={`ZEBRA QAZAQSTAN: WhatsApp ${SITE.phone}, ${SITE.address}, ${SITE.hours}. Отвечаем в WhatsApp за 2 минуты в рабочее время.`} crumbs={[['Контакты', '/contacts/']]} wa={WA.question}>
+  <section class="sec" style="padding-top:16px"><h1 class="h1">Контакты</h1><p class="lead">Самый быстрый способ связи — WhatsApp. В рабочее время отвечаем в течение 2 минут.</p></section>
+  <section class="sec" style="padding-top:28px"><div class="row" style="align-items:stretch">
+    <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:14px">
+      <a class="card" href={WA.question} target="_blank" rel="noopener" data-event="whatsapp_click" data-place="contacts-big" style="padding:24px;border:2px solid var(--accent)">
+        <div style="font-size:14px;font-weight:600;color:var(--accent)">WhatsApp</div>
+        <div style="font-size:30px;font-weight:800;margin-top:4px">{SITE.phone}</div>
+        <span class="btn btn-accent" style="margin-top:14px"><WaIcon />Написать в WhatsApp</span>
+      </a>
+      <div class="card" style="padding:22px">
+        <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:12px 18px;font-size:16px;line-height:1.5">
+          <dt class="muted">Адрес</dt><dd style="margin:0">{SITE.address}</dd>
+          <dt class="muted">Часы работы</dt><dd style="margin:0">{SITE.hours}</dd>
+          <dt class="muted">Instagram</dt><dd style="margin:0"><a href={SITE.instagram} target="_blank" rel="noopener" style="text-decoration:underline">{SITE.instagramHandle}</a></dd>
+          <dt class="muted">2GIS</dt><dd style="margin:0"><a href={SITE.gis} target="_blank" rel="noopener" style="text-decoration:underline;color:var(--accent)">Открыть карточку в 2GIS</a></dd>
+          <dt class="muted">Юрлицо</dt><dd style="margin:0">{SITE.legal}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="card" style="flex:1.3 1 420px;min-height:380px;background:#ece6db;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px">
+      <b style="font-size:20px">Мы на карте</b>
+      <p class="muted" style="max-width:360px;margin:0">{SITE.address}. Постройте маршрут в 2GIS — там же отзывы клиентов.</p>
+      <a class="btn btn-dark" href={SITE.gis} target="_blank" rel="noopener">Построить маршрут в 2GIS</a>
+    </div>
+  </div></section>
+</Base>

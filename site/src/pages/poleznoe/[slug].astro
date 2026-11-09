@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import WaButton from '../../components/WaButton.astro';
+import { wa } from '../../data/site';
+import { GUIDES, type Guide } from '../../data/guides';
+export function getStaticPaths() { return GUIDES.map((g) => ({ params: { slug: g.slug }, props: { g } })); }
+const { g } = Astro.props as { g: Guide };
+const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: g.title, description: g.description, image: new URL(g.img, Astro.site).toString(), author: { '@type': 'Organization', name: 'ZEBRA QAZAQSTAN' }, publisher: { '@type': 'Organization', name: 'ZEBRA QAZAQSTAN' }, inLanguage: 'ru' };
+---
+<Base title={g.title} description={g.description} crumbs={[['Полезное', '/poleznoe/'], [g.title, `/poleznoe/${g.slug}/`]]} wa={wa(g.wa)} ogImage={g.img}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <article class="sec guide" style="padding-top:16px;max-width:880px;margin-left:0">
+    <div class="kicker">Полезное · {g.read} чтения</div>
+    <h1 class="h1" style="margin-top:6px">{g.title}</h1>
+    <p class="lead">{g.intro}</p>
+    <div class="card" style="margin-top:22px;border-left:6px solid var(--accent);padding:18px 22px"><b style="font-size:16px">Коротко</b><ul style="margin:8px 0 0;padding-left:20px;font-size:16px;line-height:1.55">{g.short.map((s) => <li style="margin:6px 0">{s}</li>)}</ul></div>
+    <figure style="margin:26px 0 0"><img class="photo" src={g.img} alt={g.alt} width="880" height="420" style="height:clamp(220px,32vw,420px)" /><figcaption>{g.alt}</figcaption></figure>
+    {g.sections.map(([h, items]) => <><h2>{h}</h2><ul>{items.map((x) => <li>{x}</li>)}</ul></>)}
+    {g.table && <><h2>Сравнение в таблице</h2><div class="card" style="overflow-x:auto"><table>{g.table.map((r, i) => <tr>{r.map((c, j) => i === 0 || j === 0 ? <th scope={i === 0 ? 'col' : 'row'}>{c}</th> : <td>{c}</td>)}</tr>)}</table></div></>}
+    <div class="cta" style="margin-top:36px"><div><h2 style="margin:0">Поможем выбрать вживую</h2><p>Бесплатный замер по Астане, образцы тканей с собой. В WhatsApp отвечаем за 2 минуты в рабочее время.</p></div><WaButton href={wa(g.wa)} label="Написать в WhatsApp" place="guide-cta" /></div>
+    <h2>Ещё по теме</h2>
+    <div style="display:grid;gap:10px">{GUIDES.filter((x) => x.slug !== g.slug).map((x) => <a class="card" style="padding:16px 18px;font-weight:700" href={`/poleznoe/${x.slug}/`}>{x.title} →</a>)}</div>
+  </article>
+</Base>
+<style>
+  .guide h2 { font-size: clamp(22px, 2.4vw, 28px); margin: 34px 0 10px; }
+  .guide ul { padding-left: 22px; font-size: 17px; line-height: 1.6; color: #2f2c27; }
+  .guide li { margin: 8px 0; }
+  .guide table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+  .guide th, .guide td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; }
+  .guide .cta h2 { color: #fff; }
+</style>

@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import Gallery from '../../components/Gallery.astro';
+import Steps from '../../components/Steps.astro';
+import Cta from '../../components/Cta.astro';
+import { WA, ANSWERS } from '../../data/site';
+import { HOME_WORKS, PRODUCTS } from '../../data/content';
+import { GUIDES } from '../../data/guides';
+const tasks = [
+  { href: '/home/roll-shtory/', kicker: 'Темнота для сна', title: 'Спальня и детская', text: 'Blackout — полностью блокирует свет.' },
+  { href: '/home/roll-shtory/', kicker: 'Меньше жары, вид остаётся', title: 'Гостиная, кухня, кабинет', text: 'Screen — свет без потери вида.' },
+  { href: '/home/roll-shtory/', kicker: 'Свет по настроению', title: 'Днём светло, вечером приватно', text: 'День-Ночь (Зебра) — поворот механизма.' },
+  { href: '/home/elektrokarnizy/', kicker: 'Умный дом', title: 'Голос, смартфон, пульт', text: 'Электрокарнизы, моторы и аккумуляторный привод.' },
+];
+---
+<Base title="Шторы и жалюзи для дома в Астане" description="Ролл-шторы, жалюзи, плиссе, римские шторы и электрокарнизы для квартиры и дома в Астане. Бесплатный замер с образцами, заказ даже на одно окно, возможен монтаж в один день." crumbs={[['Для дома', '/home/']]}>
+  <section class="hero">
+    <div>
+      <div class="kicker">Для дома · Астана</div>
+      <h1 class="h1">Шторы и жалюзи для вашего дома</h1>
+      <p class="lead">Собственное производство в Астане. Бесплатный замер с образцами тканей, заказ даже на одно окно, гарантия 12 месяцев.</p>
+      <div class="badge" style="margin-top:14px">{ANSWERS.sameDay}</div>
+    </div>
+    <figure><img class="photo" src="/img/home-alu-bronze.webp" alt="Жалюзи в гостиной — наша работа" width="800" height="420" fetchpriority="high" /><figcaption>Наша работа.</figcaption></figure>
+  </section>
+  <section class="sec"><h2 class="h2">Что для вас важно?</h2><p class="sub">Выберите задачу — покажем подходящее решение</p><LinkCards items={tasks} /></section>
+  <section class="sec"><h2 class="h2">Изделия для дома</h2><LinkCards items={PRODUCTS.map((p) => ({ href: `/home/${p.slug}/`, img: p.img, alt: p.imgAlt, kicker: 'Изделие', title: p.crumb, text: p.lead }))} /></section>
+  <section class="sec"><h2 class="h2">Наши работы в квартирах</h2><p class="sub">Реальные фото наших установок в Астане</p><Gallery items={HOME_WORKS.slice(0, 4)} /></section>
+  <section class="sec"><h2 class="h2">Как заказать</h2><Steps items={[['Пишете в WhatsApp', 'Отвечаем за 2 минуты в рабочее время'], ['Бесплатный замер', 'С образцами тканей, без обязательств'], ['Изготовление', 'Собственный цех, возможно в тот же день'], ['Монтаж', 'Аккуратно, гарантия 12 месяцев']]} /></section>
+  <section class="sec"><h2 class="h2">Поможем разобраться</h2><LinkCards items={GUIDES.slice(0, 3).map((g) => ({ href: `/poleznoe/${g.slug}/`, kicker: `Гид · ${g.read}`, title: g.title, text: g.short[0] }))} /></section>
+  <Cta title="Готовы выбрать?" text="Напишите нам — бесплатно приедем на замер по Астане, привезём образцы и предложим подходящий вариант." href={WA.zamer} label="Записаться на замер в WhatsApp" place="home-hub" />
+</Base>

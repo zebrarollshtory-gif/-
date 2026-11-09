@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Intro from '../components/Intro.astro';
+import Facts from '../components/Facts.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import LinkCards from '../components/LinkCards.astro';
+import WaButton from '../components/WaButton.astro';
+import { WA, ANSWERS } from '../data/site';
+import { OBJECTS } from '../data/content';
+const tasks = [
+  { href: '/home/roll-shtory/', img: '/img/ill-den-noch.webp', alt: 'Ролл-шторы День-Ночь, иллюстрация', kicker: 'Приватность', title: 'День-Ночь (Зебра)', text: 'Днём мягкий свет, вечером полная приватность — поворотом механизма.' },
+  { href: '/home/roll-shtory/', img: '/img/intro-dark.webp', alt: 'Переговорная с опущенными шторами, иллюстрация', kicker: 'Затемнение', title: 'Blackout', text: 'Полное затемнение для спальни, переговорной, кабинета врача.' },
+  { href: '/business/screen/', img: '/img/ill-screen-fabric.webp', alt: 'Ткань Screen крупным планом, иллюстрация', kicker: 'Защита от солнца', title: 'Screen', text: 'Меньше жары и бликов, вид из окна сохраняется.' },
+  { href: '/home/elektrokarnizy/', img: '/img/work-remote.webp', alt: 'Моторизованные ролл-шторы с пультом — наша работа', kicker: 'Умный дом', title: 'Электрокарнизы и моторы', text: 'Алиса, Google Home, Apple HomeKit, пульт, аккумулятор.' },
+];
+const featured = ['bc-sigma', 'bc-agar', 'cardiff-university'].map((s) => OBJECTS.find((o) => o.slug === s)!);
+---
+<Base title="Главная" description="Собственное производство и монтаж ролл-штор, жалюзи, римских штор и электрокарнизов в Астане. Бесплатный замер с образцами, возможен монтаж в один день, гарантия 12 месяцев. Для бизнеса — весь Казахстан.">
+  <Intro />
+  <section class="sec"><Facts /></section>
+  <section class="sec"><h2 class="h2">Подберём под вашу задачу</h2><LinkCards items={tasks} imgHeight={170} /></section>
+  <section class="sec">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:18px"><h2 class="h2" style="margin:0">Наши объекты</h2><a href="/projects/" style="font-weight:600;color:var(--accent)">Все объекты →</a></div>
+    <LinkCards items={featured.map((o) => ({ href: `/projects/${o.slug}/`, img: o.img, alt: o.name, kicker: o.cat, title: o.name, text: o.done }))} imgHeight={240} />
+  </section>
+  <section class="sec"><h2 class="h2">Как заказать</h2><Steps items={[['Пишете в WhatsApp', 'Отвечаем за 2 минуты в рабочее время'], ['Бесплатный замер', 'С образцами тканей, без обязательств'], ['Изготовление', 'Собственный цех, возможно в тот же день'], ['Монтаж', 'Акты, паспорта, гарантия 12 месяцев']]} /></section>
+  <section class="sec">
+    <div class="card" style="padding:clamp(22px,3vw,32px);display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+      <div style="flex:1 1 420px"><h2 class="h2" style="margin:0">Документы для закупщиков и тендеров</h2><p class="muted" style="margin:10px 0 0;font-size:16px;line-height:1.6">Сертификаты, СЭС, пожарные заключения и благодарственные письма заказчиков. Напишите нам в WhatsApp — предоставим документы лично и поможем составить техническое задание для вашей закупки.</p></div>
+      <WaButton href={WA.docs} label="Запросить документы в WhatsApp" variant="dark" place="home-docs" />
+    </div>
+  </section>
+  <section class="sec" style="max-width:960px;margin-left:0"><h2 class="h2">Вопросы и ответы</h2>
+    <Faq items={[['Какая гарантия?', ANSWERS.warranty], ['Как проходит бесплатный замер?', 'Замерщик приезжает с образцами тканей, замер бесплатный и ни к чему не обязывает. Принимаем заказ даже на одно окно.'], ['От чего зависит стоимость?', ANSWERS.price], ['Какие сроки изготовления и монтажа?', ANSWERS.terms]]} />
+    <a href="/voprosy/" style="display:inline-block;margin-top:14px;font-weight:600;color:var(--accent)">Все вопросы →</a>
+  </section>
+  <section class="sec"><div class="row">
+    <div class="card" style="flex:1 1 420px;padding:30px"><h3 style="font-size:26px">Записаться на замер</h3><p class="muted" style="margin:8px 0 18px;line-height:1.55">Напишите нам в WhatsApp: ответим за 2 минуты в рабочее время. Замер бесплатный, с образцами тканей. Только Астана.</p><WaButton href={WA.zamer} label="Написать в WhatsApp" place="home-zamer" /><a href="/home/zamer/" style="display:block;margin-top:12px;font-weight:600;color:var(--accent)">Собрать сообщение с районом и изделием →</a></div>
+    <div class="card" style="flex:1 1 420px;padding:30px"><h3 style="font-size:26px">Запросить КП</h3><p class="muted" style="margin:8px 0 18px;line-height:1.55">Для организаций, весь Казахстан. Подскажем, куда отправить планировку и ТЗ, и поможем составить техническое задание.</p><WaButton href={WA.kp} label="Запросить КП в WhatsApp" variant="dark" place="home-kp" /></div>
+  </div></section>
+</Base>

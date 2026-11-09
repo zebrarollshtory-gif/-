@@ -1,0 +1,12 @@
+---
+// items: {href, img?, alt?, kicker, title, text}
+const { items, imgHeight = 190 } = Astro.props;
+---
+<div class="grid">
+  {items.map((c) => (
+    <a class="card lcard" href={c.href}>
+      {c.img && <img src={c.img} alt={c.alt || c.title} loading="lazy" width="600" height={imgHeight} style={`height:${imgHeight}px`} />}
+      <div class="body"><div class="kicker">{c.kicker}</div><h3>{c.title}</h3><p>{c.text}</p><div class="more">Подробнее →</div></div>
+    </a>
+  ))}
+</div>

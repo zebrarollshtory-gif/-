@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import Facts from '../../components/Facts.astro';
+import Steps from '../../components/Steps.astro';
+import Cta from '../../components/Cta.astro';
+import { WA } from '../../data/site';
+import { BIZ, OBJECTS } from '../../data/content';
+const roles = [
+  ...BIZ.slice(0, 3).map((b) => ({ href: `/business/${b.slug}/`, img: b.img, alt: b.imgAlt, kicker: b.crumb, title: b.points[0][0], text: b.lead })),
+  { href: '/business/dizayneram/', img: '/img/obj-ramada-1.webp', alt: 'Римские шторы в отеле Ramada', kicker: 'Дизайнерам и архитекторам', title: 'По вашему ТЗ', text: 'Результат совпадает с концепцией — по цвету, текстуре, механике и размерам.' },
+  ...BIZ.slice(3).map((b) => ({ href: `/business/${b.slug}/`, img: b.img, alt: b.imgAlt, kicker: b.crumb, title: b.points[0][0], text: b.lead })),
+];
+const featured = ['bc-agar', 'ramada', 'gp-10', 'astana-expo-b-2-2'].map((s) => OBJECTS.find((o) => o.slug === s)!);
+---
+<Base title="Солнцезащитные системы для бизнеса" description="Ролл-шторы, жалюзи и автоматические шторы для офисов, бизнес-центров, гостиниц, клиник и школ по всему Казахстану. Один подрядчик, документы, помощь с ТЗ." crumbs={[['Для бизнеса', '/business/']]} wa={WA.kp} waLabel="Запросить КП в WhatsApp">
+  <section class="hero">
+    <div>
+      <div class="kicker">Для бизнеса · весь Казахстан</div>
+      <h1 class="h1">Солнцезащитные системы для организаций</h1>
+      <p class="lead">Офисы, бизнес-центры, гостиницы, клиники, школы и заведения. Один подрядчик от замера до сдачи с документами, помощь с техническим заданием.</p>
+    </div>
+    <figure><img class="photo" src="/img/work-office-sunset.webp" alt="Офис с ролл-шторами и портьерами — наша работа" width="800" height="420" fetchpriority="high" /><figcaption>Наша работа.</figcaption></figure>
+  </section>
+  <section class="sec"><h2 class="h2">Кто вы?</h2><p class="sub">Выберите свою роль — покажем, что важно именно вам</p><LinkCards items={roles} imgHeight={170} /></section>
+  <section class="sec"><h2 class="h2">Почему нам доверяют</h2><Facts items={[['с 2019', 'года на рынке'], ['50+', 'объектов сдано'], ['10 000+', 'м² в год'], ['весь РК', 'замер и монтаж с выездом']]} /></section>
+  <section class="sec"><h2 class="h2">Объекты, которые мы оснастили</h2><p class="sub">Многие здания — целиком, от первого до последнего этажа</p>
+    <LinkCards items={featured.map((o) => ({ href: `/projects/${o.slug}/`, img: o.img, alt: o.name, kicker: o.cat, title: o.name, text: o.done }))} imgHeight={170} />
+    <a href="/projects/" style="display:inline-block;margin-top:16px;font-weight:600;color:var(--accent)">Все объекты →</a></section>
+  <section class="sec"><h2 class="h2">Как мы работаем</h2><Steps items={[['Пишете в WhatsApp', 'Подскажем, куда отправить планировку и ТЗ'], ['Замер и спецификация', 'Согласуем каждую позицию до производства'], ['Производство', 'Собственный цех'], ['Монтаж и сдача', 'В нерабочее время, с актами и паспортами']]} /></section>
+  <section class="sec"><h2 class="h2">Документы и доверие</h2><div class="grid-3">
+    <a class="card lcard" href="/documents/"><div class="body"><h3>Благодарственные письма</h3><p>BI Group, ТОО «Курылыс», Espresso Day, BI Finance и другие.</p><div class="more">Смотреть письма →</div></div></a>
+    <a class="card lcard" href="/documents/"><div class="body"><h3>Документы для закупки</h3><p>Договор, спецификация, акты, паспорта изделий, сертификаты — предоставим лично.</p><div class="more">Состав пакета →</div></div></a>
+    <a class="card lcard" href="/poleznoe/solncezashchita-dlya-ofisa/"><div class="body"><h3>Чек-лист закупщика</h3><p>Что проверить при закупке солнцезащиты для офиса.</p><div class="more">Читать гид →</div></div></a>
+  </div></section>
+  <Cta title="Обсудим ваш объект?" text="Напишите в WhatsApp: ответим за 2 минуты в рабочее время, поможем с техническим заданием и подготовим КП." href={WA.kp} label="Запросить КП в WhatsApp" place="biz-hub" />
+</Base>

@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import { WA, ANSWERS, SITE } from '../data/site';
+const groups: [string, [string, string][]][] = [
+  ['Замер и заказ', [['Сколько стоит замер?', 'Замер бесплатный и ни к чему не обязывает.'], ['Как записаться на замер?', `Напишите нам в WhatsApp ${SITE.phone}. ${ANSWERS.response}`], ['Что привезёт замерщик?', 'Образцы тканей, чтобы вы выбрали материал и цвет на месте.'], ['Можно ли заказать шторы только на одно окно?', ANSWERS.oneWindow]]],
+  ['Цены и сроки', [['От чего зависит цена?', ANSWERS.price], ['Какие сроки изготовления и монтажа?', ANSWERS.terms]]],
+  ['Как выбрать', [['Чем Screen отличается от Blackout?', 'Screen пропускает свет и сохраняет вид из окна, защищая от ультрафиолета и перегрева. Blackout полностью блокирует свет.'], ['Что выбрать для спальни?', 'Для полного затемнения — Blackout. Для мягкого света днём и приватности вечером — День-Ночь (Зебра).'], ['Что выбрать для офиса?', 'Чаще всего — ролл-шторы Screen: меньше жары и бликов, вид из окна сохраняется. Для переговорных — Blackout.']]],
+  ['Умный дом и автоматизация', [['С какими системами работают ваши шторы?', 'Яндекс Алиса, Google Home, Apple HomeKit, а также пульт и смартфон.'], ['Что такое сценарии?', 'Шторы срабатывают по команде или расписанию: «Кино», «Доброе утро», «Я ушёл».'], ['Есть ли шторы с управлением от аккумулятора?', ANSWERS.battery]]],
+  ['Для бизнеса', [['Работаете ли вы по всему Казахстану?', ANSWERS.geo], ['Какие документы вы предоставляете?', ANSWERS.docs], ['Поможете составить техническое задание?', ANSWERS.tz], ['Можно ли проводить монтаж в нерабочее время?', 'Да, монтируем в нерабочее время, чтобы не останавливать работу объекта.']]],
+  ['Гарантия', [['Какая гарантия?', ANSWERS.warranty]]],
+];
+const all = groups.flatMap(([, items]) => items);
+const ld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: all.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) };
+---
+<Base title="Вопросы и ответы" description="Ответы ZEBRA QAZAQSTAN: стоимость и сроки, бесплатный замер, заказ на одно окно, Screen или Blackout, умные шторы и аккумуляторный привод, документы для организаций, гарантия." crumbs={[['Вопросы и ответы', '/voprosy/']]} wa={WA.question}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <section class="sec" style="padding-top:16px;max-width:960px;margin-left:0">
+    <h1 class="h1">Вопросы и ответы</h1>
+    <p class="lead">Коротко о замере, ценах, выборе изделий, умном доме и работе с организациями.</p>
+    {groups.map(([t, items]) => <><h2 style="font-size:clamp(22px,2.4vw,28px);margin:36px 0 12px">{t}</h2><Faq items={items} schema={false} open={-1} /></>)}
+  </section>
+  <Cta title="Не нашли ответ?" text="Задайте свой вопрос в WhatsApp — ответим за 2 минуты в рабочее время. Бесплатно приедем на замер по Астане, привезём образцы и предложим подходящий вариант." href={WA.question} label="Задать свой вопрос" place="faq-cta" />
+</Base>
