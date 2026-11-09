@@ -29,8 +29,8 @@ npm run build    # готовый сайт в папке dist/
 
 - Репозиторий: этот. Корневая папка проекта: `site`.
 - Команда сборки: `npm run build`. Папка с результатом: `dist`.
-- Временный адрес: `https://zebra-qazaqstan.pages.dev`.
-- После регистрации домена `.kz`: заменить адрес в `astro.config.mjs` (`site`) и в `public/robots.txt` (строка `Sitemap`), подключить домен в Cloudflare Pages.
+- Домен: `https://zebra-qazaqstan.kz` (регистратор hoster.kz). Адрес прописан в `astro.config.mjs` (`site`) и `public/robots.txt` (`Sitemap`).
+- Временный адрес Cloudflare (`*.pages.dev`) работает параллельно; основной — домен.
 
 ## Что уже заложено для поиска и ИИ-помощников
 

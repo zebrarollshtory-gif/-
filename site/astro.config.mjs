@@ -1,9 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Временный адрес. Заменить на итоговый домен (.kz), когда он будет зарегистрирован.
+// Основной домен сайта (зарегистрирован на ИП «Lux Service», регистратор hoster.kz).
 export default defineConfig({
-  site: 'https://zebra-qazaqstan.pages.dev',
+  site: 'https://zebra-qazaqstan.kz',
   trailingSlash: 'always',
   build: { format: 'directory' },
   integrations: [sitemap()],
