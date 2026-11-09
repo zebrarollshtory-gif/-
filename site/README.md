@@ -37,4 +37,4 @@ npm run build    # готовый сайт в папке dist/
 - Уникальные title и description, H1, хлебные крошки на каждой странице.
 - Разметка schema.org: организация (HomeAndConstructionBusiness), FAQPage, Product, Article, BreadcrumbList.
 - `sitemap-index.xml` (создаётся при сборке), `robots.txt` открыт для поисковиков и ИИ-роботов, `llms.txt` — краткая справка о компании.
-- Google-тег `GTM-KT92Z3R6` (Google Analytics) на всех страницах. События: `whatsapp_click` (с местом кнопки), `choice` (выбор «Для дома / Для бизнеса»), `faq_open`. Нажатие WhatsApp — это обращение, не заявка. Яндекс Метрика — добавить номер счётчика.
+- Google-тег `GTM-KT92Z3R6` (Google Analytics) на всех страницах. События: `whatsapp_click` (с местом кнопки), `choice` (выбор «Для дома / Для бизнеса»), `faq_open`. Нажатие WhatsApp — это обращение, не заявка. Яндекс Метрика: счётчик `114150201` с Вебвизором; те же события отправляются как цели (`reachGoal`).
