@@ -103,7 +103,7 @@ const isActive = (href: string) => path.startsWith(href);
 
   <footer class="site-footer">
     <div class="in">
-      <div style="flex:1 1 260px"><div style="font-size:17px;font-weight:800;color:var(--ink)">{SITE.brand}</div>{SITE.legal}<br />{SITE.address}<br />{SITE.hours}</div>
+      <div style="flex:1 1 260px"><div style="font-size:17px;font-weight:800;color:var(--ink)">{SITE.brand}</div>{SITE.legal}<br />Производство: {SITE.address}<br />Работаем с выездом к клиенту<br />{SITE.hours}</div>
       <div style="flex:1 1 220px">WhatsApp: <a href={WA.question} target="_blank" rel="noopener" data-event="whatsapp_click" data-place="footer">{SITE.phone}</a><br />Instagram <a href={SITE.instagram} target="_blank" rel="noopener">{SITE.instagramHandle}</a><br /><a href={SITE.gis} target="_blank" rel="noopener" style="text-decoration:underline">2GIS: Zebra Qazaqstan</a></div>
       <div style="flex:1 1 260px">{SITE.slogan}.</div>
       <nav class="map" aria-label="Карта сайта">{FOOTER_NAV.map((n) => <a href={n.href}>{n.label}</a>)}</nav>
